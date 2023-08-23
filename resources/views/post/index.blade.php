@@ -26,7 +26,7 @@
         <td>{{$post->likes}}</td>
         <td>{{$post->is_published}}</td>
         <td>{{$post->created_at}}</td>
-        <td><a class="btn btn-warning">Edit</a></td>
+        <td><a href="{{ route('post.show', $post->id )}}" class="btn btn-warning">Show</a></td>
     </tr>
     @endforeach
 
