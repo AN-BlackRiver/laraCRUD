@@ -25,6 +25,18 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+            <label for="tags">Tags</label>
+            <select id="tags" class="form-select" name="tags[]" multiple>
+                @foreach($tags as $tag)
+                    <option
+                    @foreach($post->tags as $PostTag)
+                          {{$tag->id === $PostTag->id ? 'selected': '' }}
+                    @endforeach
+                          value="{{$tag->id}}">{{$tag->title}}</option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Обновить</button>
         <a href="{{route('post.index')}}" class="btn btn-danger">Назад</a>
     </form>

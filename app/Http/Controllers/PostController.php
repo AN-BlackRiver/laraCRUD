@@ -20,17 +20,17 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('post.create', compact('categories','tags'));
+        return view('post.create', compact('categories', 'tags'));
     }
 
     public function store()
     {
         $data = \request()->validate([
-            'title' => 'string',
-            'content' => 'string',
-            'image' => 'string',
-            'category_id' => '',
-            'tags' => ''
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'image' => 'required|string',
+            'category_id' => 'required',
+            'tags' => 'required'
         ]);
         $tags = $data['tags'];
         unset($data['tags']);
@@ -49,7 +49,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('post.edit', compact('post','categories'));
+        $tags = Tag::all();
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update(Post $post)
@@ -58,11 +59,14 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
-            'category_id' => 'string'
-
+            'category_id' => 'string',
+            'tags' => ''
         ]);
+        $tags = $data['tags'];
+        unset($data['tags']);
 
         $post->update($data);
+        $post->tags()->sync($tags);
         return redirect()->route('post.show', $post->id);
 
     }
